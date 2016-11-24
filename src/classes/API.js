@@ -11,6 +11,7 @@ import {
 const methods = [
   'doPushwooshApiMethod',
   'registerDevice',
+  'registerUser',
   'unregisterDevice',
   'applicationOpen',
   'setTags',
@@ -54,6 +55,20 @@ export default class PushwooshAPI {
       device_model: getBrowserVersion(),
       device_name: getDeviceName(),
       device_type: getBrowserType()
+    });
+  }
+  
+  registerUser(userId) {
+    return this.callAPI('registerUser', {
+      userId: userId,
+      device_type: getBrowserType(),
+      device_model: getBrowserVersion(),
+      device_name: getDeviceName(),
+      push_token: this.pushToken,
+      public_key: this.publicKey,
+      auth_token: this.authToken,
+      language: this.language || 'en',
+      timezone: -(new Date).getTimezoneOffset() * 60
     });
   }
 
